@@ -1,0 +1,17 @@
+table, th {
+    border:1px solid black;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+table, th, td {
+    padding: 5px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+td {
+    border-left: 1px solid black;
+}
