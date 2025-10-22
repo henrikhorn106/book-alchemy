@@ -1,16 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  </head>
-  <body>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Books</title>
+</head>
+<body>
 
+<h1>Books</h1>
+<table>
+    <tr>
+        <th>ISBN</th>
+        <th>Title</th>
+        <th>Publication Year</th>
+    </tr>
     {% for book in books %}
-    <div> <h3>{{ book.title }}</h3>
-    </div>
+    <tr>
+        <td>{{ book.isbn }}</td>
+        <td>{{ book.title }}</td>
+        <td>{{ book.publication_year }}</td>
+    </tr>
     {% endfor %}
+</table>
 
-  </body>
+</body>
 </html>
