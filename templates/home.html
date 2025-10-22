@@ -39,7 +39,7 @@
         <th></th>
     </tr>
     {% for book, author in books %}
-    <tr>
+    <tr onclick="window.location.href='/book/{{ book.id }}';">
         <td>{{ book.isbn }}</td>
         <td><img alt="{{ book.title }} Cover" src="https://covers.openlibrary.org/b/isbn/{{ book.isbn }}-M.jpg"
                  width="80px"></td>

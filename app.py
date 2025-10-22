@@ -3,6 +3,7 @@
 import os
 from datetime import datetime
 
+import requests
 from flask import Flask, render_template, request, redirect, flash
 from sqlalchemy import or_
 
@@ -116,6 +117,16 @@ def delete_book(book_id):
     db.session.commit()
     flash(f'Book {book.title} deleted successfully!', 'success')
     return redirect("/")
+
+
+@app.route('/book/<int:book_id>', methods=['GET'])
+def get_book(book_id):
+    """Show details of book in database."""
+    book = db.session.query(Book, Author).join(Author).filter(Book.id == book_id).first()
+    details = requests.get(f"https://openlibrary.org/search.json", params={
+        "isbn": book.Book.isbn,
+    }).json()
+    return render_template('book_details.html', book=book, details=details)
 
 # Create tables in database
 # with app.app_context():
