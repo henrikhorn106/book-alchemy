@@ -61,6 +61,19 @@ def index():
     books = db.session.query(Book, Author).join(Author).order_by(Book.isbn.desc()).all()
     return render_template("home.html", books=books)
 
+
+@app.route('/sort_by_title')
+def sort_by_title():
+    books = db.session.query(Book, Author).join(Author).order_by(Book.title.asc()).all()
+    return render_template("home.html", books=books)
+
+
+@app.route('/sort_by_author')
+def sort_by_author():
+    books = db.session.query(Book, Author).join(Author).order_by(Author.name.asc()).all()
+    return render_template("home.html", books=books)
+
+
 # Create tables in database
 # with app.app_context():
 #     db.create_all()

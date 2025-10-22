@@ -1,5 +1,5 @@
 table, th {
-    border:1px solid black;
+    border: 1px solid black;
     border-collapse: collapse;
     text-align: left;
 }
@@ -18,4 +18,25 @@ td {
 
 tr {
     border-bottom: 1px solid black;
+}
+
+button {
+    cursor: pointer;
+    border-radius: 3px;
+    padding: 5px 10px;
+    border: 1px solid black;
+}
+
+button:hover {
+    background-color: lightgrey;
+}
+
+button:hover#add {
+    background-color: lightsteelblue;
+    color: black;
+}
+
+#add {
+    background-color: steelblue;
+    color: white;
 }
