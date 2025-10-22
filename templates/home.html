@@ -5,7 +5,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>Books</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
 </head>
 <body>
 
@@ -13,6 +13,7 @@
 <table>
     <tr>
         <th>ISBN</th>
+        <th>Cover</th>
         <th>Title</th>
         <th>Publication Year</th>
         <th>Author</th>
@@ -20,9 +21,10 @@
     {% for book, author in books %}
     <tr>
         <td>{{ book.isbn }}</td>
+        <td><img alt="{{ book.title }} Cover" src="https://covers.openlibrary.org/b/isbn/{{ book.isbn }}-S.jpg"></td>
         <td>{{ book.title }}</td>
-        <td>{{ book.publication_year }}</td>
         <td>{{ author.name }}</td>
+        <td>{{ book.publication_year }}</td>
     </tr>
     {% endfor %}
 </table>
