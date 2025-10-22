@@ -1,5 +1,14 @@
+import os
+
+from data_models import db, Author, Book
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+
+# Initialize flask app
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///library.sqlite'
-db = SQLAlchemy(app)
+
+# Initialize database
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(basedir, 'data/library.sqlite')}"
+
+# Connect database to flask app
+db.init_app(app)
