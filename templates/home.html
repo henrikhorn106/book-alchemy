@@ -10,18 +10,25 @@
 <body>
 
 <h1>Books</h1>
-<button onclick="window.location.href='/sort_by_title';">Sort by Title</button>
-<button onclick="window.location.href='/sort_by_author';">Sort by Author</button>
-<button id="add" onclick="window.location.href='/add_book';">Add Book</button>
-<button id="add" onclick="window.location.href='/add_author';">Add Author</button>
+<div class="wrapper">
+    <form action="/search" method="GET">
+        <label for="search"></label>
+        <input type="text" id="search" placeholder="Search by title or author" name="search">
+        <input type="submit" value="Submit" hidden>
+    </form>
+    <button onclick="window.location.href='/sort_by_title';">Sort by Title</button>
+    <button onclick="window.location.href='/sort_by_author';">Sort by Author</button>
+    <button class="add" onclick="window.location.href='/add_book';">Add Book</button>
+    <button class="add" onclick="window.location.href='/add_author';">Add Author</button>
+</div>
 <br><br>
 <table>
     <tr>
         <th>ISBN</th>
         <th>Cover</th>
         <th>Title</th>
-        <th>Publication Year</th>
         <th>Author</th>
+        <th>Publication Year</th>
     </tr>
     {% for book, author in books %}
     <tr>

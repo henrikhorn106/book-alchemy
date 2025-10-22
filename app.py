@@ -1,7 +1,10 @@
+"""Flask app to manage books and authors."""
+
 import os
 from datetime import datetime
 
 from flask import Flask, render_template, request
+from sqlalchemy import or_
 
 from data_models import db, Author, Book
 
@@ -18,6 +21,7 @@ db.init_app(app)
 
 @app.route('/add_author', methods=['GET', 'POST'])
 def add_author():
+    """Add author to database."""
     if request.method == 'POST':
         # Get data from form
         name = request.form['name']
@@ -33,12 +37,12 @@ def add_author():
         db.session.commit()
         return f"Author {name} added successfully!"
 
-    else:
-        return render_template("add_author.html")
+    return render_template("add_author.html")
 
 
 @app.route('/add_book', methods=['GET', 'POST'])
 def add_book():
+    """Add book to database."""
     if request.method == 'POST':
         # Get data from form
         isbn = request.form['isbn']
@@ -52,27 +56,51 @@ def add_book():
         db.session.commit()
         return f"Book {title} added successfully!"
 
-    else:
-        return render_template("add_book.html", authors=Author.query.all())
+    return render_template("add_book.html", authors=Author.query.all())
 
 
 @app.route('/')
 def index():
+    """Show all books in database."""
     books = db.session.query(Book, Author).join(Author).order_by(Book.isbn.desc()).all()
     return render_template("home.html", books=books)
 
 
 @app.route('/sort_by_title')
 def sort_by_title():
+    """Show all books in database sorted by title."""
     books = db.session.query(Book, Author).join(Author).order_by(Book.title.asc()).all()
     return render_template("home.html", books=books)
 
 
 @app.route('/sort_by_author')
 def sort_by_author():
+    """Show all books in database sorted by author."""
     books = db.session.query(Book, Author).join(Author).order_by(Author.name.asc()).all()
     return render_template("home.html", books=books)
 
+
+@app.route('/search', methods=['GET'])
+def search():
+    """Search for books in database."""
+    query = request.args.get('search', '')
+
+    books = []
+    if query:
+        books = (
+            db.session.query(Book, Author)
+            .join(Author)
+            .filter(
+                or_(
+                    Book.title.ilike(f"%{query}%"),
+                    Author.name.ilike(f"%{query}%")
+                )
+            )
+            .order_by(Book.isbn.desc())
+            .all()
+        )
+
+    return render_template('home.html', books=books)
 
 # Create tables in database
 # with app.app_context():

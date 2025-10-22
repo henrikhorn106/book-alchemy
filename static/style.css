@@ -20,7 +20,7 @@ tr {
     border-bottom: 1px solid black;
 }
 
-button {
+button, input {
     cursor: pointer;
     border-radius: 3px;
     padding: 5px 10px;
@@ -31,12 +31,16 @@ button:hover {
     background-color: lightgrey;
 }
 
-button:hover#add {
-    background-color: lightsteelblue;
-    color: black;
+button:hover.add {
+    background-color: steelblue;
 }
 
-#add {
-    background-color: steelblue;
-    color: white;
+.add {
+    background-color: lightsteelblue;
+}
+
+.wrapper {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
 }
