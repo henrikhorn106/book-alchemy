@@ -58,7 +58,8 @@ def add_book():
 
 @app.route('/')
 def index():
-    return render_template("home.html", books=Book.query.all())
+    books = db.session.query(Book, Author).join(Author).order_by(Book.isbn.desc()).all()
+    return render_template("home.html", books=books)
 
 # Create tables in database
 # with app.app_context():
