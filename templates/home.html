@@ -39,15 +39,18 @@
         <th></th>
     </tr>
     {% for book, author in books %}
-    <tr onclick="window.location.href='/book/{{ book.id }}';">
-        <td>{{ book.isbn }}</td>
+    <tr>
+        <td class="book-selector" onclick="window.location.href='/book/{{ book.id }}';">{{ book.isbn }}</td>
         <td><img alt="{{ book.title }} Cover" src="https://covers.openlibrary.org/b/isbn/{{ book.isbn }}-M.jpg"
                  width="80px"></td>
-        <td>{{ book.title }}</td>
-        <td>{{ author.name }}</td>
-        <td>{{ book.publication_year }}</td>
+        <td class="book-selector" onclick="window.location.href='/book/{{ book.id }}';">{{ book.title }}</td>
+        <td class="book-selector" onclick="window.location.href='/book/{{ book.id }}';">{{ author.name }}</td>
+        <td class="book-selector" onclick="window.location.href='/book/{{ book.id }}';">{{ book.publication_year }}</td>
         <td>
-            <button class="delete" onclick="window.location.href='/book/{{ book.id }}/delete';">Delete</button>
+            <div class="button-container">
+                <button class="delete" onclick="window.location.href='/book/{{ book.id }}/delete';">Delete Book</button>
+                <button class="delete" onclick="window.location.href='/author/{{ author.id }}/delete';">Delete Author</button>
+            </div>
         </td>
     </tr>
     {% endfor %}

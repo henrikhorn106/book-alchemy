@@ -128,6 +128,23 @@ def get_book(book_id):
     }).json()
     return render_template('book_details.html', book=book, details=details)
 
+
+@app.route('/author/<int:author_id>/delete', methods=['GET', 'DELETE'])
+def delete_author(author_id):
+    """Delete author from database."""
+    author = Author.query.get_or_404(author_id)
+    db.session.delete(author)
+    db.session.commit()
+
+    books = Book.query.filter(Book.author_id == author_id).all()
+    for book in books:
+        db.session.delete(book)
+        db.session.commit()
+
+    flash(f'Author {author.name} deleted successfully!', 'success')
+    return redirect("/")
+
+
 # Create tables in database
 # with app.app_context():
 #     db.create_all()
