@@ -5,9 +5,11 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>Add Book</title>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
 </head>
 <body>
 
+<h1>Add Book</h1>
 <form action="/add_book" method="POST">
     <label for="isbn">ISBN Number:</label>
     <input id="isbn" name="isbn" required type="text"><br><br>
@@ -21,7 +23,7 @@
         <option value="{{ author.id }}">{{ author.name }}</option>
         {% endfor %}}
     </select><br><br>
-    <input type="submit" value="Add Book">
+    <button class="add" type="submit">Add Book</button>
 </form>
 
 </body>

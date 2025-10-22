@@ -1,46 +1,133 @@
-table, th {
-    border: 1px solid black;
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+table {
+    width: 100%;
     border-collapse: collapse;
+}
+
+td, th {
+    padding: 15px 20px;
     text-align: left;
 }
 
-table, th, td {
-    padding: 5px;
-}
-
 th {
-    background-color: #f2f2f2;
+    background-color: #e9e9e9;
 }
 
-td {
-    border-left: 1px solid black;
+table.rounded-corners {
+    /* Change these properties */
+    --border: 0px solid black;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+
+    /* Don't change these properties */
+    border-spacing: 0;
+    border-collapse: separate;
+    border: var(--border);
+    overflow: hidden;
 }
 
-tr {
-    border-bottom: 1px solid black;
+/* Apply a border to the right of all but the last column */
+table.rounded-corners th:not(:last-child),
+table.rounded-corners td:not(:last-child) {
+    border-right: var(--border);
 }
 
-button, input {
+/* Apply a border to the bottom of all but the last row */
+table.rounded-corners > thead > tr:not(:last-child) > th,
+table.rounded-corners > thead > tr:not(:last-child) > td,
+table.rounded-corners > tbody > tr:not(:last-child) > th,
+table.rounded-corners > tbody > tr:not(:last-child) > td,
+table.rounded-corners > tfoot > tr:not(:last-child) > th,
+table.rounded-corners > tfoot > tr:not(:last-child) > td,
+table.rounded-corners > tr:not(:last-child) > td,
+table.rounded-corners > tr:not(:last-child) > th,
+table.rounded-corners > thead:not(:last-child),
+table.rounded-corners > tbody:not(:last-child),
+table.rounded-corners > tfoot:not(:last-child) {
+    border-bottom: var(--border);
+}
+
+button {
     cursor: pointer;
     border-radius: 3px;
+    border: 0 solid black;
+    background-color: #e9e9e9;
     padding: 5px 10px;
-    border: 1px solid black;
 }
 
 button:hover {
-    background-color: lightgrey;
+    background-color: #ddd;
 }
 
-button:hover.add {
-    background-color: steelblue;
+input {
+    border-radius: 3px;
+    padding: 5px 10px;
+    border: 1px solid lightgrey;
 }
 
-.add {
-    background-color: lightsteelblue;
+select {
+    border-radius: 3px;
+    padding: 5px 10px;
+    border: 1px solid lightgrey;
 }
 
 .wrapper {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.flashes {
+    border-radius: 3px;
+}
+
+.error {
+    background-color: lightcoral;
+    color: darkred;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.success {
+    background-color: lightgreen;
+    color: darkgreen;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.warning {
+    background-color: lightgoldenrodyellow;
+    color: darkgoldenrod;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.delete {
+    background-color: lightpink;
+    color: darkred;
+    padding: 10px;
+}
+
+.add {
+    background-color: lightsteelblue;
+    color: darkblue;
+}
+
+.add:hover {
+    background-color: steelblue;
+    color: white;
+}
+
+/* Add a black background color to the top navigation bar */
+.topnav {
+    overflow: hidden;
+    background-color: #e9e9e9;
+    padding: 10px;
+    border-radius: 5px;
 }

@@ -7,36 +7,48 @@
     <title>Books</title>
     <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
 </head>
-<body>
-
 <h1>Books</h1>
-<div class="wrapper">
-    <form action="/search" method="GET">
-        <label for="search"></label>
-        <input type="text" id="search" placeholder="Search by title or author" name="search">
-        <input type="submit" value="Submit" hidden>
-    </form>
-    <button onclick="window.location.href='/sort_by_title';">Sort by Title</button>
-    <button onclick="window.location.href='/sort_by_author';">Sort by Author</button>
-    <button class="add" onclick="window.location.href='/add_book';">Add Book</button>
-    <button class="add" onclick="window.location.href='/add_author';">Add Author</button>
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<p class="{{ category }}">{{ message }}</p>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<div class="topnav">
+    <div class="wrapper">
+        <form action="/search" method="GET">
+            <label for="search"></label>
+            <input id="search" name="search" placeholder="Search by title or author" type="text">
+            <input hidden type="submit" value="Submit">
+        </form>
+        <button onclick="window.location.href='/sort_by_title';">Sort by Title</button>
+        <button onclick="window.location.href='/sort_by_author';">Sort by Author</button>
+        <button class="add" onclick="window.location.href='/add_book';">Add Book</button>
+        <button class="add" onclick="window.location.href='/add_author';">Add Author</button>
+    </div>
 </div>
 <br><br>
-<table>
+<table class="rounded-corners">
     <tr>
         <th>ISBN</th>
         <th>Cover</th>
         <th>Title</th>
         <th>Author</th>
         <th>Publication Year</th>
+        <th></th>
     </tr>
     {% for book, author in books %}
     <tr>
         <td>{{ book.isbn }}</td>
-        <td><img alt="{{ book.title }} Cover" src="https://covers.openlibrary.org/b/isbn/{{ book.isbn }}-M.jpg" width="80px"></td>
+        <td><img alt="{{ book.title }} Cover" src="https://covers.openlibrary.org/b/isbn/{{ book.isbn }}-M.jpg"
+                 width="80px"></td>
         <td>{{ book.title }}</td>
         <td>{{ author.name }}</td>
         <td>{{ book.publication_year }}</td>
+        <td>
+            <button class="delete" onclick="window.location.href='/book/{{ book.id }}/delete';">Delete</button>
+        </td>
     </tr>
     {% endfor %}
 </table>

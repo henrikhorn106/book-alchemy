@@ -3,13 +3,14 @@
 import os
 from datetime import datetime
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, flash
 from sqlalchemy import or_
 
 from data_models import db, Author, Book
 
 # Initialize flask app
 app = Flask(__name__)
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 # Initialize database
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -35,7 +36,8 @@ def add_author():
         author = Author(name=name, birth_date=birth_date, date_of_death=date_of_death)
         db.session.add(author)
         db.session.commit()
-        return f"Author {name} added successfully!"
+        flash(f"Author {name} added successfully!", 'success')
+        return redirect("/")
 
     return render_template("add_author.html")
 
@@ -54,7 +56,8 @@ def add_book():
         book = Book(isbn=isbn, title=title, publication_year=publication_year, author_id=author_id)
         db.session.add(book)
         db.session.commit()
-        return f"Book {title} added successfully!"
+        flash(f'Book {title} added successfully!', 'success')
+        return redirect("/")
 
     return render_template("add_book.html", authors=Author.query.all())
 
@@ -99,8 +102,20 @@ def search():
             .order_by(Book.isbn.desc())
             .all()
         )
+    else:
+        flash("Please enter a search query.", 'warning')
 
     return render_template('home.html', books=books)
+
+
+@app.route('/book/<int:book_id>/delete', methods=['GET', 'DELETE'])
+def delete_book(book_id):
+    """Delete book from database."""
+    book = Book.query.get_or_404(book_id)
+    db.session.delete(book)
+    db.session.commit()
+    flash(f'Book {book.title} deleted successfully!', 'success')
+    return redirect("/")
 
 # Create tables in database
 # with app.app_context():

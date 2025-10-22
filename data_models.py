@@ -10,6 +10,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+
 class Author(db.Model):
     """
     Represents an author in the database.

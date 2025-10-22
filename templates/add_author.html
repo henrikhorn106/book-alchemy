@@ -5,9 +5,11 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>Add Author</title>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
 </head>
 <body>
 
+<h1>Add Author</h1>
 <form action="/add_author" method="POST">
     <label for="name">Author Name:</label>
     <input id="name" name="name" required type="text"><br><br>
@@ -16,7 +18,7 @@
     <input id="birthdate" name="birthdate" required type="date"><br><br>
     <label for="date_of_death">Date of Death:</label>
     <input id="date_of_death" name="date_of_death" type="date"><br><br>
-    <input type="submit" value="Add Author">
+    <button class="add" type="submit">Add Author</button>
 </form>
 
 </body>
