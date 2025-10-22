@@ -111,7 +111,6 @@ select {
 .delete {
     background-color: lightpink;
     color: darkred;
-    padding: 10px;
 }
 
 .add {
