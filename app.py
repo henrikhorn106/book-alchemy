@@ -70,8 +70,6 @@ def index():
              .join(Author)
              .order_by(Book.isbn.desc())
              .all())
-
-    print(books)
     return render_template("home.html", books=books)
 
 
@@ -142,9 +140,9 @@ def get_book(book_id):
             )
     try:
         avg_rating = round((db.session.query(func.avg(Rating.rating))
-                      .filter(Rating.book_id == book_id)
-                      .scalar()
-                      ), 2)
+                            .filter(Rating.book_id == book_id)
+                            .scalar()
+                            ), 2)
     except TypeError:
         avg_rating = "No ratings available"
     details = requests.get(f"https://openlibrary.org/search.json", params={
@@ -184,3 +182,7 @@ def rate_book(book_id: int):
 # Create tables in database
 # with app.app_context():
 #     db.create_all()
+
+
+if __name__ == '__main__':
+    app.run(debug=True)

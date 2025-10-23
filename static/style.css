@@ -8,7 +8,6 @@ body {
 table {
     display: block;
     max-width: fit-content;
-    margin: 0 auto;
     white-space: wrap;
 }
 
@@ -68,7 +67,6 @@ table.rounded-corners > tfoot:not(:last-child) {
 .button-container {
     display: flex;
     gap: 10px;
-    align-items: center;
 }
 
 button {
@@ -190,5 +188,3 @@ select {
     padding: 5px 10px;
     border-radius: 3px;
 }
-
-
