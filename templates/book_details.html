@@ -16,6 +16,14 @@
     </div>
     <div class="grid-item">
         <h1>{{ book.Book.title }}</h1>
+        <p><b>Raiting:</b> {{ avg_rating }}</p>
+        <form action="/rate/{{ book.Book.id }}" method="POST">
+            <label for="rating">Rate this book:</label>
+            <input id="rating" max="5" min="1" name="rating" required type="number">
+            <input hidden name="book_id" type="text" value="{{ book.Book.id }}">
+            <input type="submit" value="Rate">
+        </form>
+        <br><br>
         <p><b>ISBN:</b> {{ book.Book.isbn }}</p>
         <p><b>Publication Year:</b> {{ book.Book.publication_year }}</p>
         <p><b>Authors:</b> {{ book.Author.name }}</p>

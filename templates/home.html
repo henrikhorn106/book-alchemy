@@ -29,32 +29,39 @@
     </div>
 </div>
 <br><br>
-<table class="rounded-corners">
-    <tr>
-        <th>ISBN</th>
-        <th>Cover</th>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Publication Year</th>
-        <th></th>
-    </tr>
-    {% for book, author in books %}
-    <tr>
-        <td class="book-selector" onclick="window.location.href='/book/{{ book.id }}';">{{ book.isbn }}</td>
-        <td><img alt="{{ book.title }} Cover" src="https://covers.openlibrary.org/b/isbn/{{ book.isbn }}-M.jpg"
-                 width="80px"></td>
-        <td class="book-selector" onclick="window.location.href='/book/{{ book.id }}';">{{ book.title }}</td>
-        <td class="book-selector" onclick="window.location.href='/book/{{ book.id }}';">{{ author.name }}</td>
-        <td class="book-selector" onclick="window.location.href='/book/{{ book.id }}';">{{ book.publication_year }}</td>
-        <td>
-            <div class="button-container">
-                <button class="delete" onclick="window.location.href='/book/{{ book.id }}/delete';">Delete Book</button>
-                <button class="delete" onclick="window.location.href='/author/{{ author.id }}/delete';">Delete Author</button>
-            </div>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+<div style="overflow-x:auto;">
+    <table class="rounded-corners">
+        <tr>
+            <th>ISBN</th>
+            <th>Cover</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Publication Year</th>
+            <th></th>
+        </tr>
+        {% for book, author in books %}
+        <tr>
+            <td class="book-selector" onclick="window.location.href='/book/{{ book.id }}';">{{ book.isbn }}</td>
+            <td><img alt="{{ book.title }} Cover" src="https://covers.openlibrary.org/b/isbn/{{ book.isbn }}-M.jpg"
+                     width="80px"></td>
+            <td class="book-selector" onclick="window.location.href='/book/{{ book.id }}';">{{ book.title }}</td>
+            <td class="book-selector" onclick="window.location.href='/book/{{ book.id }}';">{{ author.name }}</td>
+            <td class="book-selector" onclick="window.location.href='/book/{{ book.id }}';">{{ book.publication_year
+                }}
+            </td>
+            <td>
+                <div class="button-container">
+                    <button class="delete" onclick="window.location.href='/book/{{ book.id }}/delete';">Delete Book
+                    </button>
+                    <button class="delete" onclick="window.location.href='/author/{{ author.id }}/delete';">Delete
+                        Author
+                    </button>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
 
 </body>
 </html>

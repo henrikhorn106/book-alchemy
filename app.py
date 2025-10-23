@@ -5,9 +5,9 @@ from datetime import datetime
 
 import requests
 from flask import Flask, render_template, request, redirect, flash
-from sqlalchemy import or_
+from sqlalchemy import or_, func
 
-from data_models import db, Author, Book
+from data_models import db, Author, Book, Rating
 
 # Initialize flask app
 app = Flask(__name__)
@@ -66,21 +66,34 @@ def add_book():
 @app.route('/')
 def index():
     """Show all books in database."""
-    books = db.session.query(Book, Author).join(Author).order_by(Book.isbn.desc()).all()
+    books = (db.session.query(Book, Author)
+             .join(Author)
+             .order_by(Book.isbn.desc())
+             .all())
+
+    print(books)
     return render_template("home.html", books=books)
 
 
 @app.route('/sort_by_title')
 def sort_by_title():
     """Show all books in database sorted by title."""
-    books = db.session.query(Book, Author).join(Author).order_by(Book.title.asc()).all()
+    books = (db.session.query(Book, Author)
+             .join(Author)
+             .order_by(Book.title.asc())
+             .all()
+             )
     return render_template("home.html", books=books)
 
 
 @app.route('/sort_by_author')
 def sort_by_author():
     """Show all books in database sorted by author."""
-    books = db.session.query(Book, Author).join(Author).order_by(Author.name.asc()).all()
+    books = (db.session.query(Book, Author)
+             .join(Author)
+             .order_by(Author.name.asc())
+             .all()
+             )
     return render_template("home.html", books=books)
 
 
@@ -122,11 +135,23 @@ def delete_book(book_id):
 @app.route('/book/<int:book_id>', methods=['GET'])
 def get_book(book_id):
     """Show details of book in database."""
-    book = db.session.query(Book, Author).join(Author).filter(Book.id == book_id).first()
+    book = (db.session.query(Book, Author)
+            .join(Author)
+            .filter(Book.id == book_id)
+            .first()
+            )
+    try:
+        avg_rating = round((db.session.query(func.avg(Rating.rating))
+                      .filter(Rating.book_id == book_id)
+                      .scalar()
+                      ), 2)
+    except TypeError:
+        avg_rating = "No ratings available"
     details = requests.get(f"https://openlibrary.org/search.json", params={
         "isbn": book.Book.isbn,
     }).json()
-    return render_template('book_details.html', book=book, details=details)
+
+    return render_template('book_details.html', book=book, details=details, avg_rating=avg_rating)
 
 
 @app.route('/author/<int:author_id>/delete', methods=['GET', 'DELETE'])
@@ -143,6 +168,17 @@ def delete_author(author_id):
 
     flash(f'Author {author.name} deleted successfully!', 'success')
     return redirect("/")
+
+
+@app.route('/rate/<int:book_id>', methods=['GET', 'POST'])
+def rate_book(book_id: int):
+    """Rate book in database."""
+    if request.method == 'POST':
+        rating = request.form['rating']
+        db.session.add(Rating(book_id=book_id, rating=rating))
+        db.session.commit()
+        flash(f'Book rated successfully!', 'success')
+        return redirect(f"/book/{book_id}")
 
 
 # Create tables in database

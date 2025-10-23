@@ -72,3 +72,26 @@ class Book(db.Model):
 
     def __str__(self):
         return self.title
+
+
+class Rating(db.Model):
+    """
+    Represents a rating for a book in the system.
+
+    This class is used to store and manage information about a specific
+    rating assigned to a book. It includes the unique identifier for the
+    rating, the book it applies to, and the rating value itself.
+
+    :ivar id: The unique identifier for the rating.
+    :ivar book_id: The identifier of the book associated with this rating.
+    :ivar rating: The value of the rating assigned to the book.
+    """
+    id = db.Column(db.Integer, primary_key=True)
+    book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
+    rating = db.Column(db.Integer)
+
+    def __repr__(self):
+        return f'<Raiting {self.rating}>'
+
+    def __str__(self):
+        return self.rating
